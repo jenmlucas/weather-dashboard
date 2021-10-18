@@ -1,0 +1,15 @@
+body{
+    background-color: rgb(245, 210, 189);
+}
+
+.searchBtn {
+    background-color: rgb(253, 116, 180);
+}
+
+.header {
+    background-image: linear-gradient(to right, rgb(248, 165, 220),rgb(245, 180, 59),rgb(196, 0, 0));
+}
+
+.card {
+    background-color: rgb(252, 184, 138);
+}
