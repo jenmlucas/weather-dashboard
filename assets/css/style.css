@@ -13,3 +13,12 @@ body{
 .card {
     background-color: rgb(252, 184, 138);
 }
+
+.card-title{
+    text-decoration: underline;
+}
+
+#display-forecast{
+    padding-left: 10px;
+    padding-top: 10px;
+}
