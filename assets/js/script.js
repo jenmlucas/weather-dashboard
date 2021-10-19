@@ -61,7 +61,6 @@ var getCity = function (latitude, longitude) {
                 uvi.textContent = "Uvi" + " " + currentUvi;
                 weather.appendChild(uvi);
 
-
                 // saveCityInfo();
             });
         } else {
@@ -97,10 +96,9 @@ var getCityName = function () {
 var displayCity = function (getCity, searchTerm) {
         weatherContainer.textContent = "";
         weatherSearchTerm.textContent = searchTerm;
-        
         // console.log(getCity);
         // console.log(searchTerm);
-        // reset(); 
+        // reset();
     };
 
     // //save city to local storage
