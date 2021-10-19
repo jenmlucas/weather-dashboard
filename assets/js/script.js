@@ -19,23 +19,47 @@ var cityInput = document.getElementById("city");
 var cityForm = document.getElementById("city-form")
 var weatherContainer = document.getElementById("weather-container");
 var weatherSearchTerm = document.getElementById("city-search-term");
+// var latitude = 37.0902;
+// var longitude = -95.7129;
+var weather = document.getElementById("display-forecast");
 
 var getCity = function (city) {
-    var apiList = "https://api.openweathermap.org/data/2.5/onecall?lat=37.0902&lon=-95.7129&exclude=minutely,hourly&appid=5c71643f7754882962dd3859f2f84f94"
-
+    var apiList = "https://api.openweathermap.org/data/2.5/onecall?&lat=37.0902&lon=-95.7129&exclude=minutely,hourly&appid=5c71643f7754882962dd3859f2f84f94&units=imperial"
     //"https://api.openweathermap.org/data/2.5/forecast?q=mesa&appid=5c71643f7754882962dd3859f2f84f94";
-
     console.log("function was called");
     fetch(apiList).then(function (response) {
         console.log(response);
         if (response.ok) {
             response.json().then(function (data) {
-                console.log(data);
                 displayCity(data, city);
-                for (var i = 0; i < data.length; i++) {
-                    var weatherInfo = data[i];
-                    console.log(weatherInfo);
-                }
+                console.log(data);
+                
+                weather.innerHTML= "";
+            
+                var currentTemp = data.current.temp;
+                console.log(currentTemp);
+                var temp = document.createElement("p")
+                temp.textContent= "Tempature" + " " + currentTemp;
+                weather.appendChild(temp);          
+              
+                var currentHumidity = data.current.humidity;
+                console.log(currentHumidity);
+                var humidity = document.createElement("p")
+                humidity.textContent= "Humidity" + " " + currentHumidity;
+                weather.appendChild(humidity);    
+
+                var currentWindSpeed = data.current.wind_speed;
+                console.log(currentWindSpeed);
+                var wind = document.createElement("p")
+                wind.textContent= "Wind-Speed" + " " +  currentWindSpeed;
+                weather.appendChild(wind);    
+
+                var currentUvi = data.current.uvi;
+                console.log(currentUvi);
+                var uvi = document.createElement("p")
+                uvi.textContent= "Uvi" + " " + currentUvi;
+                weather.appendChild(uvi);    
+                
             });
         } else {
             alert("Error: City Not Found");
@@ -46,6 +70,7 @@ var getCity = function (city) {
         })
 };
 
+//to display city infor into correct areas 
 var displayCity = function (getCity, searchTerm) {
     weatherContainer.textContent = "";
     weatherSearchTerm.textContent = searchTerm;
@@ -53,8 +78,19 @@ var displayCity = function (getCity, searchTerm) {
     console.log(searchTerm);
 };
 
-   
 
+
+// //save city to local storage
+// var saveCityInfo = function() {
+//     var weather = $(this).siblings(".displayForecast").val();
+//     var weatherContent = $(this).siblings(".displayForecast").attr("class");
+
+//     var storage = localStorage.setItem(weatherContent, JSON.stringify(weather));
+
+
+// }   
+
+//to use search button
 var formSearchHandler = function (event) {
     event.preventDefault();
     console.log(event);
