@@ -20,9 +20,24 @@ var cityForm = document.getElementById("city-form")
 var weatherContainer = document.getElementById("weather-container");
 var weatherSearchTerm = document.getElementById("city-search-term");
 var weather = document.getElementById("display-forecast");
-// var citySearch = latitude + longitude;
-// var latitude = "";
-// var longitude= "";
+var day = document.getElementById("day1");
+
+
+var fiveDayForecast = function (forecast) {
+    console.log(forecast);
+
+    for (let i = 0; i < 5; i++) {
+        //put moment function here 
+        console.log(forecast[i].dt)
+       //something like this 
+       console.log(moment(forecast[i].dt));
+        var five = document.createElement("p")
+        console.log(forecast[i].temp.day);
+        five.textContent= forecast[i].temp.day;
+        document.getElementById(`day${i+1}`).appendChild(five);
+    }
+    
+};
 
 var getCity = function (latitude, longitude) {
     var apiList = "https://api.openweathermap.org/data/2.5/onecall?&lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly&appid=5c71643f7754882962dd3859f2f84f94&units=imperial"
@@ -33,10 +48,10 @@ var getCity = function (latitude, longitude) {
         // console.log(response);
         if (response.ok) {
             response.json().then(function (data) {
-                displayCity(data);
+                displayCity(data, cityInput.value);
                 console.log(data);
                 weather.innerHTML = "";
-         
+
                 var currentTemp = data.current.temp;
                 // console.log(currentTemp);
                 var temp = document.createElement("p")
@@ -61,6 +76,8 @@ var getCity = function (latitude, longitude) {
                 uvi.textContent = "Uvi" + " " + currentUvi;
                 weather.appendChild(uvi);
 
+
+                fiveDayForecast(data.daily);
                 // saveCityInfo();
             });
         } else {
@@ -83,7 +100,7 @@ var getCityName = function () {
             response.json().then(function (data) {
                 // console.log(data);
                 var lat = data.coord.lat;
-                var lon= data.coord.lon;
+                var lon = data.coord.lon;
                 // console.log(lat, lon)
                 getCity(lat, lon);
             })
@@ -93,40 +110,24 @@ var getCityName = function () {
 
 
 //to display city infor into correct areas 
-var displayCity = function (getCity, searchTerm) {
-        weatherContainer.textContent = "";
-        weatherSearchTerm.textContent = searchTerm;
-        // console.log(getCity);
-        // console.log(searchTerm);
-        // reset();
-    };
+var displayCity = function (city, searchTerm) {
+    weatherContainer.textContent = "";
+    weatherSearchTerm.textContent = searchTerm;
+};
 
-    // //save city to local storage
-    // var saveCityInfo = function() {
-    //  localStorage.setItem("apiList", JSON.stringify(apiList));
+//to use search button
+var formSearchHandler = function (event) {
+    event.preventDefault();
+    // console.log(event);
 
+    var cityName = cityInput.value.trim();
 
-    // }   
+    if (cityName) {
+        getCity(cityName);
+        cityInput.value = "";
+    } else {
+        alert("Please enter a city.")
+    }
+};
 
-    // var getCityInfo =function() {
-    //  var savedSearches = localStorage.getItem("", ()); 
-    // }
-
-    //to use search button
-    var formSearchHandler = function (event) {
-        event.preventDefault();
-        // console.log(event);
-
-        var cityName = cityInput.value.trim();
-
-        if (cityName) {
-            getCity(cityName);
-            cityInput.value = "";
-        } else {
-            alert("Please enter a city.")
-        }
-    };
-
-    // getCity();
-
-    search.addEventListener("click", getCityName);
+search.addEventListener("click", getCityName);
