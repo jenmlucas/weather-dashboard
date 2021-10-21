@@ -22,3 +22,8 @@ body{
     padding-left: 10px;
     padding-top: 10px;
 }
+
+.content{
+    text-decoration: underline;
+    font-weight: bold;
+}
