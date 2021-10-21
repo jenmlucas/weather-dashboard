@@ -1,19 +1,19 @@
 // GIVEN a weather dashboard with form inputs
 
 // WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
+// THEN I am presented with current and future conditions for that city and that city is added to the search history- Done
 
 // WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+// THEN I am presented with the city name-Done, the date-Done, an icon representation of weather conditions, the temperature- Done, the humidity- Done, the wind speed,- Done and the UV index
 
 // WHEN I view the UV index
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe- done 
 
 // WHEN I view future weather conditions for that city
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+// THEN I am presented with a 5-day forecast that displays the date- done, an icon representation of weather conditions, the temperature- done, the wind speed- done, and the humidity- done
 
 // WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city
+// THEN I am again presented with current and future conditions for that city- done 
 var search = document.getElementById("search");
 var cityInput = document.getElementById("city");
 var cityForm = document.getElementById("city-form")
@@ -22,15 +22,15 @@ var weatherSearchTerm = document.getElementById("city-search-term");
 var weather = document.getElementById("display-forecast");
 var day = document.getElementById("day1");
 var date = document.getElementById("date1");
-// var storage= [];
-// var loadStorage= [];
-var searches= document.getElementById("searches");
-var btnSearch = document.getElementsByClassName("button");
+var searches = document.getElementById("searches");
+var deleteEl = document.getElementById("deleteSearches");
+var terms = document.getElementById("terms");
+
 
 var fiveDayForecast = function (forecast) {
     console.log(forecast);
 
-    currentForecast.innerHTML= "";
+    currentForecast.innerHTML = "";
     var currentDate = document.createElement("p")
     var currentItem = new Date(forecast[0].dt * 1000).toLocaleDateString("en-US");
     currentDate.textContent = currentItem;
@@ -38,12 +38,12 @@ var fiveDayForecast = function (forecast) {
     console.log(dateItem);
 
     for (let i = 0; i < 5; i++) {
-        
+
         var dateList = document.getElementById(`date${i + 1}`)
-        dateList.innerHTML="";
+        dateList.innerHTML = "";
 
         var dayList = document.getElementById(`day${i + 1}`);
-        dayList.innerHTML="";
+        dayList.innerHTML = "";
 
         //put moment function here
         var dateInfo = document.createElement("div")
@@ -51,6 +51,12 @@ var fiveDayForecast = function (forecast) {
         dateInfo.textContent = dateItem;
         document.getElementById(`date${i + 1}`).appendChild(dateInfo);
         console.log(dateItem);
+
+        var currentWeatherIconUrl = `https://openweathermap.org/img/w/${forecast[i].weather[0].icon}.png`
+        console.log(currentWeatherIconUrl);
+        var weatherIcon = document.createElement("img")
+        weatherIcon.setAttribute("src", currentWeatherIconUrl);
+        document.getElementById(`day${i + 1}`).appendChild(weatherIcon);
 
         // console.log(forecast[i].dt)
         //something like this 
@@ -70,7 +76,6 @@ var fiveDayForecast = function (forecast) {
         windSpeed.textContent = "Wind Speed:" + " " + forecast[i].wind_speed;
         document.getElementById(`day${i + 1}`).appendChild(windSpeed);
     }
-
 };
 
 var getCity = function (latitude, longitude) {
@@ -81,10 +86,25 @@ var getCity = function (latitude, longitude) {
         // console.log(response);
         if (response.ok) {
             response.json().then(function (data) {
-                displayCity(data, cityInput.value);
                 console.log(data);
                 weather.innerHTML = "";
 
+                // var currentWeatherIcon = document.createElement("img");
+                var currentWeatherIconUrl = `https://openweathermap.org/img/w/${data.current.weather[0].icon}.png`
+                console.log(currentWeatherIconUrl);
+                var weatherIcon = document.createElement("img")
+                weatherIcon.setAttribute("src", currentWeatherIconUrl);
+                weather.appendChild(weatherIcon);
+
+                // https://openweathermap.org/img/w/04d.png
+                // var icon = data.current.weather[0].icon;
+                // console.log("current icon:" + icon);
+
+                // var weatherIcon = document.createElement("img")
+                // weatherIcon.src= "./assets/images/icons" + icon +"png";
+                // weatherIconDiv.appendChild(weatherIcon);
+
+                // create current weather
                 var currentTemp = data.current.temp;
                 // console.log(currentTemp);
                 var temp = document.createElement("p")
@@ -107,10 +127,16 @@ var getCity = function (latitude, longitude) {
                 // console.log(currentUvi);
                 var uvi = document.createElement("p")
                 uvi.textContent = "Uvi" + " " + currentUvi;
+                if (currentUvi < 3) {
+                    uvi.classList.add("bg-success");
+                } else if (currentUvi < 7) {
+                    uvi.classList.add("bg-warning");
+                } else {
+                    uvi.classList.add("bg-danger");
+                }
                 weather.appendChild(uvi);
 
                 fiveDayForecast(data.daily);
-                saveStorage();
             });
         } else {
             alert("Error: City Not Found");
@@ -121,8 +147,7 @@ var getCity = function (latitude, longitude) {
         })
 };
 
-var getCityName = function () {
-    var cityName = cityInput.value;
+var getCityName = function (cityName) {
     // console.log(cityName);
     var apiCity = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=5c71643f7754882962dd3859f2f84f94";
 
@@ -141,12 +166,16 @@ var getCityName = function () {
 };
 
 //to display city infor into correct areas 
-var displayCity = function (city, searchTerm) {
+var displayCity = function (searchTerm) {
     weatherContainer.textContent = "";
-    weatherSearchTerm.textContent = searchTerm; 
-    var saveButton= document.createElement("button");
-    saveButton.textContent= searchTerm;
-    saveButton.classList.add("row", "mt-2");
+    weatherSearchTerm.textContent = searchTerm;
+    var saveButton = document.createElement("button");
+    saveButton.textContent = searchTerm;
+    saveButton.classList.add("row", "mt-2", "savedCity");
+    saveButton.addEventListener("click", function () {
+        console.log("this is some text", this);
+        getCityName(this.textContent);
+    });
     terms.append(saveButton);
 };
 
@@ -166,12 +195,38 @@ var formSearchHandler = function (event) {
 };
 
 var saveStorage = function () {
-    var storage= localStorage.setItem(getCity);
-    console.log("this", storage);
-}
+    var savedCities = JSON.parse(localStorage.getItem("cities")) || [];
+    savedCities.push(cityInput.value);
+    localStorage.setItem("cities", JSON.stringify(savedCities));
+    console.log("this", savedCities);
+};
 
-var loadStorage = function () {
+var displaySavedStorage = function () {
+    var savedCities = JSON.parse(localStorage.getItem("cities")) || [];
+    for (var i = 0; i < savedCities.length; i++) {
+        var citiesButton = document.createElement("button");
+        citiesButton.textContent = savedCities[i];
+        citiesButton.classList.add("row", "mt-2", "savedCity");
+        citiesButton.addEventListener("click", function () {
+            console.log("this is some text", this);
+            getCityName(this.textContent);
+        });
+        terms.append(citiesButton);
+    }
 
-}
+};
 
-search.addEventListener("click", getCityName);
+var deleteSearches = function () {
+    console.log("delete button clicked");
+    localStorage.removeItem("cities");
+    terms.innerHTML = "";
+};
+
+displaySavedStorage();
+search.addEventListener("click", function () {
+    getCityName(cityInput.value);
+    displayCity(cityInput.value);
+    saveStorage();
+});
+
+deleteEl.addEventListener("click", deleteSearches);
