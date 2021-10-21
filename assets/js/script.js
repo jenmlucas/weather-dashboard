@@ -22,8 +22,10 @@ var weatherSearchTerm = document.getElementById("city-search-term");
 var weather = document.getElementById("display-forecast");
 var day = document.getElementById("day1");
 var date = document.getElementById("date1");
-
-var btn = document.getElementsByClassName("button");
+// var storage= [];
+// var loadStorage= [];
+var searches= document.getElementById("searches");
+var btnSearch = document.getElementsByClassName("button");
 
 var fiveDayForecast = function (forecast) {
     console.log(forecast);
@@ -34,13 +36,16 @@ var fiveDayForecast = function (forecast) {
     currentDate.textContent = currentItem;
     document.getElementById("currentForecast").appendChild(currentDate);
     console.log(dateItem);
-   
 
     for (let i = 0; i < 5; i++) {
+        
+        var dateList = document.getElementById(`date${i + 1}`)
+        dateList.innerHTML="";
+
+        var dayList = document.getElementById(`day${i + 1}`);
+        dayList.innerHTML="";
+
         //put moment function here
-
-
-
         var dateInfo = document.createElement("div")
         var dateItem = new Date(forecast[i + 1].dt * 1000).toLocaleDateString("en-US");
         dateInfo.textContent = dateItem;
@@ -71,7 +76,6 @@ var fiveDayForecast = function (forecast) {
 var getCity = function (latitude, longitude) {
     var apiList = "https://api.openweathermap.org/data/2.5/onecall?&lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly&appid=5c71643f7754882962dd3859f2f84f94&units=imperial"
 
-    //"https://api.openweathermap.org/data/2.5/forecast?q=mesa&appid=5c71643f7754882962dd3859f2f84f94";
     // console.log("function was called");
     fetch(apiList).then(function (response) {
         // console.log(response);
@@ -105,9 +109,8 @@ var getCity = function (latitude, longitude) {
                 uvi.textContent = "Uvi" + " " + currentUvi;
                 weather.appendChild(uvi);
 
-
                 fiveDayForecast(data.daily);
-                // saveCityInfo();
+                saveStorage();
             });
         } else {
             alert("Error: City Not Found");
@@ -136,17 +139,15 @@ var getCityName = function () {
         }
     })
 };
-//saved searches
-var save = function () {
-    var storage = localStorage.setItem("searchTerm");
-
-    console.log(storage);
-}
 
 //to display city infor into correct areas 
 var displayCity = function (city, searchTerm) {
     weatherContainer.textContent = "";
-    weatherSearchTerm.textContent = searchTerm;
+    weatherSearchTerm.textContent = searchTerm; 
+    var saveButton= document.createElement("button");
+    saveButton.textContent= searchTerm;
+    saveButton.classList.add("row", "mt-2");
+    terms.append(saveButton);
 };
 
 //to use search button
@@ -163,5 +164,14 @@ var formSearchHandler = function (event) {
         alert("Please enter a city.")
     }
 };
+
+var saveStorage = function () {
+    var storage= localStorage.setItem(getCity);
+    console.log("this", storage);
+}
+
+var loadStorage = function () {
+
+}
 
 search.addEventListener("click", getCityName);
