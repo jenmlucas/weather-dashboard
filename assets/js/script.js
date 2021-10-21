@@ -21,38 +21,51 @@ var weatherContainer = document.getElementById("weather-container");
 var weatherSearchTerm = document.getElementById("city-search-term");
 var weather = document.getElementById("display-forecast");
 var day = document.getElementById("day1");
-var date =document.getElementById("date1");
+var date = document.getElementById("date1");
+
+var btn = document.getElementsByClassName("button");
 
 var fiveDayForecast = function (forecast) {
     console.log(forecast);
 
+    currentForecast.innerHTML= "";
+    var currentDate = document.createElement("p")
+    var currentItem = new Date(forecast[0].dt * 1000).toLocaleDateString("en-US");
+    currentDate.textContent = currentItem;
+    document.getElementById("currentForecast").appendChild(currentDate);
+    console.log(dateItem);
+   
+
     for (let i = 0; i < 5; i++) {
-        //put moment function here 
-      var dateInfo= document.createElement("div")
-      var dateItem = new Date(forecast[i].dt * 1000).toLocaleDateString("en-US");
-      dateInfo.textContent= dateItem;
-      document.getElementById(`date${i+1}`).appendChild(dateInfo);
-         console.log(dateItem);
+        //put moment function here
+
+
+
+        var dateInfo = document.createElement("div")
+        var dateItem = new Date(forecast[i + 1].dt * 1000).toLocaleDateString("en-US");
+        dateInfo.textContent = dateItem;
+        document.getElementById(`date${i + 1}`).appendChild(dateInfo);
+        console.log(dateItem);
 
         // console.log(forecast[i].dt)
-       //something like this 
+        //something like this 
         // console.log(moment(forecast[i].dt.dateItem));
         var five = document.createElement("p");
         console.log(forecast[i].temp.day);
-        five.textContent= "Tempature:" + " " + forecast[i].temp.day;
-        document.getElementById(`day${i+1}`).appendChild(five);
+        five.textContent = "Tempature:" + " " + forecast[i].temp.day;
+        document.getElementById(`day${i + 1}`).appendChild(five);
 
         var hum = document.createElement("p")
         console.log(forecast[i].humidity);
-        hum.textContent= "Humidity:" + " " +forecast[i].humidity;
-        document.getElementById(`day${i+1}`).appendChild(hum);
-      
+        hum.textContent = "Humidity:" + " " + forecast[i].humidity;
+        document.getElementById(`day${i + 1}`).appendChild(hum);
+
         var windSpeed = document.createElement("p")
         console.log(forecast[i].wind_speed);
-        windSpeed.textContent= "Wind Speed:" + " " +forecast[i].wind_speed;
-        document.getElementById(`day${i+1}`).appendChild(windSpeed);
+        windSpeed.textContent = "Wind Speed:" + " " + forecast[i].wind_speed;
+        document.getElementById(`day${i + 1}`).appendChild(windSpeed);
     }
-    
+
 };
 
 var getCity = function (latitude, longitude) {
@@ -124,9 +137,11 @@ var getCityName = function () {
     })
 };
 //saved searches
-// var save = function() {
+var save = function () {
+    var storage = localStorage.setItem("searchTerm");
 
-// }
+    console.log(storage);
+}
 
 //to display city infor into correct areas 
 var displayCity = function (city, searchTerm) {
