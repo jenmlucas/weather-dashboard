@@ -34,6 +34,7 @@ var fiveDayForecast = function (forecast) {
     var currentDate = document.createElement("p")
     var currentItem = new Date(forecast[0].dt * 1000).toLocaleDateString("en-US");
     currentDate.textContent = currentItem;
+    currentDate.classList.add("date");
     document.getElementById("currentForecast").appendChild(currentDate);
     console.log(dateItem);
 
@@ -49,6 +50,7 @@ var fiveDayForecast = function (forecast) {
         var dateInfo = document.createElement("div")
         var dateItem = new Date(forecast[i + 1].dt * 1000).toLocaleDateString("en-US");
         dateInfo.textContent = dateItem;
+        dateInfo.classList.add("date");
         document.getElementById(`date${i + 1}`).appendChild(dateInfo);
         console.log(dateItem);
 
@@ -56,6 +58,7 @@ var fiveDayForecast = function (forecast) {
         console.log(currentWeatherIconUrl);
         var weatherIcon = document.createElement("img")
         weatherIcon.setAttribute("src", currentWeatherIconUrl);
+        weatherIcon.classList.add("icons");
         document.getElementById(`day${i + 1}`).appendChild(weatherIcon);
 
         // console.log(forecast[i].dt)
@@ -64,16 +67,19 @@ var fiveDayForecast = function (forecast) {
         var five = document.createElement("p");
         console.log(forecast[i].temp.day);
         five.textContent = "Tempature:" + " " + forecast[i].temp.day;
+        five.classList.add("infoContent");
         document.getElementById(`day${i + 1}`).appendChild(five);
 
         var hum = document.createElement("p")
         console.log(forecast[i].humidity);
         hum.textContent = "Humidity:" + " " + forecast[i].humidity;
+        hum.classList.add("infoContent");
         document.getElementById(`day${i + 1}`).appendChild(hum);
 
         var windSpeed = document.createElement("p")
         console.log(forecast[i].wind_speed);
         windSpeed.textContent = "Wind Speed:" + " " + forecast[i].wind_speed;
+        windSpeed.classList.add("infoContent");
         document.getElementById(`day${i + 1}`).appendChild(windSpeed);
     }
 };
@@ -89,44 +95,40 @@ var getCity = function (latitude, longitude) {
                 console.log(data);
                 weather.innerHTML = "";
 
-                // var currentWeatherIcon = document.createElement("img");
                 var currentWeatherIconUrl = `https://openweathermap.org/img/w/${data.current.weather[0].icon}.png`
                 console.log(currentWeatherIconUrl);
                 var weatherIcon = document.createElement("img")
                 weatherIcon.setAttribute("src", currentWeatherIconUrl);
+                weatherIcon.classList.add("icon");
                 weather.appendChild(weatherIcon);
-
-                // https://openweathermap.org/img/w/04d.png
-                // var icon = data.current.weather[0].icon;
-                // console.log("current icon:" + icon);
-
-                // var weatherIcon = document.createElement("img")
-                // weatherIcon.src= "./assets/images/icons" + icon +"png";
-                // weatherIconDiv.appendChild(weatherIcon);
 
                 // create current weather
                 var currentTemp = data.current.temp;
                 // console.log(currentTemp);
                 var temp = document.createElement("p")
-                temp.textContent = "Tempature" + " " + currentTemp + " " + "°F";
+                temp.textContent = "Tempature:" + " " + currentTemp + " " + "°F";
+                temp.classList.add("infoContent");
                 weather.appendChild(temp);
 
                 var currentHumidity = data.current.humidity;
                 // console.log(currentHumidity);
                 var humidity = document.createElement("p")
-                humidity.textContent = "Humidity" + " " + currentHumidity + " " + "%";
+                humidity.textContent = "Humidity:" + " " + currentHumidity + " " + "%";
+                humidity.classList.add("infoContent");
                 weather.appendChild(humidity);
 
                 var currentWindSpeed = data.current.wind_speed;
                 // console.log(currentWindSpeed);
                 var wind = document.createElement("p")
-                wind.textContent = "Wind-Speed" + " " + currentWindSpeed + " " + "MPH";
+                wind.textContent = "Wind Speed:" + " " + currentWindSpeed + " " + "MPH";
+                wind.classList.add("infoContent");
                 weather.appendChild(wind);
 
-                var currentUvi = data.current.uvi;
+                var currentUvi = data.daily[0].uvi;
                 // console.log(currentUvi);
-                var uvi = document.createElement("p")
-                uvi.textContent = "Uvi" + " " + currentUvi;
+                var uvi = document.createElement("p");
+                uvi.classList.add("infoContent");
+                uvi.textContent = "UV Index:" + " " + currentUvi;
                 if (currentUvi < 3) {
                     uvi.classList.add("bg-success");
                 } else if (currentUvi < 7) {
@@ -171,10 +173,12 @@ var displayCity = function (searchTerm) {
     weatherSearchTerm.textContent = searchTerm;
     var saveButton = document.createElement("button");
     saveButton.textContent = searchTerm;
-    saveButton.classList.add("row", "mt-2", "savedCity");
+    saveButton.classList.add("row", "mt-2", "savedCity", "btn", "d-grid", "gap-2", "col", "rounded", "mb-2" );
     saveButton.addEventListener("click", function () {
         console.log("this is some text", this);
+        weatherSearchTerm.textContent = this.textContent;
         getCityName(this.textContent);
+        console.log(this.textContent);
     });
     terms.append(saveButton);
 };
@@ -206,10 +210,11 @@ var displaySavedStorage = function () {
     for (var i = 0; i < savedCities.length; i++) {
         var citiesButton = document.createElement("button");
         citiesButton.textContent = savedCities[i];
-        citiesButton.classList.add("row", "mt-2", "savedCity");
+        citiesButton.classList.add("row", "mt-2", "savedCity", "btn", "d-grid", "gap-2", "col", "rounded", "mb-2" );
         citiesButton.addEventListener("click", function () {
-            console.log("this is some text", this);
-            getCityName(this.textContent);
+        console.log("this is some text", this);
+        weatherSearchTerm.textContent = this.textContent;
+        getCityName(this.textContent);
         });
         terms.append(citiesButton);
     }

@@ -28,3 +28,39 @@ body{
     font-weight: bold;
 }
 
+.infoContent{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.icon {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icons {
+    width: 100px;
+    height: 100px;
+}
+
+.date{
+    background-color: rgb(248, 123, 6);
+    font-size: 25px;
+}
+.savedCity {
+    background-color: rgb(253, 116, 180);
+    margin-left: 1px;
+}
+
+#deleteSearches {
+    background-color: red;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 25px;
+}

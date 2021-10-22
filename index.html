@@ -18,8 +18,8 @@
       </div>
     </header>
 
-    <section class="row">
-      <div class="col-sm-3">
+    <section class="container-fluid d-flex justify-content-between">
+      <div class="col-sm-3 ">
         <div class="card">
           <article class="card-body">
             <h2 class="card-title text-center"> Search for a City</h2>
@@ -33,51 +33,58 @@
         </div>
       </div>
 
-      <article class="col-sm-8">
+      <article class="col-sm-9">
         <div class="card">
           <div class="card-body">
             <div id="weather-container"></div>
-              <h2 class="card-title text-center">Showing Weather for: <span id="city-search-term"></span></h2>
-              <h3><p id="currentForecast" class=" card-body border text-center mt-3"></p></h3>
-              <p id="display-forecast" class="border"></p>
+            <h2 class="card-title text-center">Showing Weather for: <span id="city-search-term"></span></h2>
+            <h3>
+              <p id="currentForecast" class=" card-body text-center mt-3"></p>
+            </h3>
+            <p id="display-forecast"></p>
           </div>
         </div>
       </article>
     </section>
 
-    <section class="row mt-4">
-      <div class="col-sm-3">
+    <section class="container-fluid d-flex justify-content-between">
+      <div class="col-sm-3 mt-2">
         <div class="card">
           <h2 class="card-title text-center"> Saved Searches:</h2>
           <article id="terms" class="card-body">
           </article>
-          <button id="deleteSearches">Delete Saved Searches</button>
+          <button id="deleteSearches" class="btn d-grid gap-2 col rounded mb-2 text-bold">Delete Saved Searches</button>
         </div>
       </div>
 
-      <article class="col-sm-8">
-        <div class="card">
+      <article class="col-sm-9">
+        <div class="card mt-2">
           <h2 class="card-title text-center">Five Day Forecast: <span id="city-search-term"></span></h2>
           <div class="card-body row justify-content-between">
-          <div id="date1" class="border col-sm-2 text-center content"></div>
-          <div id="date2" class="border col-sm-2 text-center content"></div>
-          <div id="date3" class="border col-sm-2 text-center content"></div>
-          <div id="date4" class="border col-sm-2 text-center content"></div>
-          <div id="date5" class="border col-sm-2 text-center content"></div>
-          
+            <div id="date1" class="col-sm-2 text-center content"></div>
+            <div id="date2" class="col-sm-2 text-center content"></div>
+            <div id="date3" class="col-sm-2 text-center content"></div>
+            <div id="date4" class="col-sm-2 text-center content"></div>
+            <div id="date5" class="col-sm-2 text-center content"></div>
           </div>
           <div class="card-body row justify-content-between">
-            <p id="day1" class="border col-sm-2 text-center"></p>
-            <p id="day2" class="border col-sm-2 text-center"></p>
-            <p id="day3" class="border col-sm-2 text-center"></p>
-            <p id="day4" class="border col-sm-2 text-center"></p>
-            <p id="day5" class="border col-sm-2 text-center"></p>
+            <p id="day1" class="col-sm-2 text-center"></p>
+            <p id="day2" class="col-sm-2 text-center"></p>
+            <p id="day3" class="col-sm-2 text-center"></p>
+            <p id="day4" class="col-sm-2 text-center"></p>
+            <p id="day5" class="col-sm-2 text-center"></p>
           </div>
         </div>
       </article>
     </section>
 
   </main>
+
+
+  <footer id="footer">
+    <p id="footer-copy" class="text-center mt-5 "> &copy; Copyright 2021, JenMLucas. All Rights Reserved </p>
+  </footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="assets/js/script.js"></script>
 </body>
