@@ -1,18 +1,8 @@
 # WeatherDashboard
 
 ## Description
-HTML 
-• Used to create elements for each section, such as Search for a City, Showing Weather for, Saved Searches, and the Five Day Forecast. 
-• Optimized code by using Bootstrap classes to be able to organize the content with the html file. 
+Weather Dashboard is an interactive weather app that allows you to enter in your city name, to display the current weather along with an additional 5 day forecast. Every search is then saved in local storage making it easy to switch back and forth from your favorite cities. The UV index is also presented with a color that indicates whether the conditions are favorable, moderate, or severe.
 
-CSS
-• Used Bootstrap to customize buttons, dates and icons. 
-
-Javascript
-• Created an interactive weather dashboard where you can enter a city name and get the current weather display plus an additional 5 day forecast. All searches also saved in localStorage.
-• UV index presented with a color that indicates whether the conditions are favorable, moderate, or severe.
-• Made the code easier to read by using some shorthand syntax.
-  
 ## Production Website
 
 [Weather Dashboard](https://jenmlucas.github.io/weather-dashboard/ "Weather Dashboard")
